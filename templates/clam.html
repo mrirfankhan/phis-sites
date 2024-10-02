@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Notification</title>
+    <style>
+        body {
+            background-color: #121212;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            background: linear-gradient(135deg, #1E1E1E, #333);
+        }
+
+        .container {
+            text-align: center;
+            background-color: #1E1E1E;
+            padding: 40px;
+            border-radius: 10px;
+            width: 350px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+            position: relative;
+        }
+
+        .message {
+            color: #FFD700;
+            font-size: 24px;
+            margin-bottom: 20px;
+            animation: slideIn 1s ease;
+        }
+
+        .info {
+            color: #A3A3A3;
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+
+        .countdown {
+            font-size: 40px;
+            color: #3BA3F1;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .icon {
+            width: 100px;
+            height: 100px;
+            margin: 20px auto;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <img src="{{ url_for('static', filename='money.png') }}" alt="Money Icon" class="icon">
+        <div class="message">Congratulations!</div>
+        <div class="info">Your account will be credited</div>
+        <div class="info">in the next 24 hours.</div>
+        <div class="countdown" id="countdown">24:00</div>
+    </div>
+
+    <script>
+        // Countdown Timer
+        let timeLeft = 1440; // 24 hours in minutes
+        const countdownElement = document.getElementById('countdown');
+
+        const countdownInterval = setInterval(() => {
+            if (timeLeft <= 0) {
+                clearInterval(countdownInterval);
+                countdownElement.innerHTML = "Time's up!";
+            } else {
+                const hours = Math.floor(timeLeft / 60);
+                const minutes = timeLeft % 60;
+                countdownElement.innerHTML = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
+                timeLeft--;
+            }
+        }, 1000);
+    </script>
+
+</body>
+
+</html>
